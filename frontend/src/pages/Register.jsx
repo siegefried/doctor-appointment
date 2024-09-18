@@ -94,12 +94,12 @@ const Register = () => {
               </span>
             )}
           </label>
-          <span className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
           <span className="text-sm">
           Already have an account? <Link className="underline" to="/login">Login here</Link>
         </span>
             <Button type="submit">Register</Button>
-          </span>
+          </div>
         </form>
       </div>
     </>
