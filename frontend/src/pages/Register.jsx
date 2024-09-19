@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom/dist";
+import { notifications } from "@mantine/notifications";
 
 const Register = () => {
   const {
@@ -11,6 +12,10 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = handleSubmit((data) => {
+    notifications.show({
+      title: "Test",
+      message: "Test Register"
+    })
     console.log(data);
   });
 
