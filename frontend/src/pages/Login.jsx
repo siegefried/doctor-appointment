@@ -1,6 +1,9 @@
 import { Button } from "@mantine/core";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom/dist";
+import { Link, useNavigate } from "react-router-dom/dist";
+import { notifications } from "@mantine/notifications";
+import * as apiClient from "../services/userService";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const Login = () => {
   const {
@@ -8,9 +11,30 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const mutate = useMutation({
+    mutationFn: apiClient.login,
+    onSuccess: async () => {
+      notifications.show({
+        title: "Success",
+        message: "Logged in.",
+      });
+      await queryClient.invalidateQueries("validateToken");
+      navigate("/");
+    },
+
+    onError: (error) => {
+      notifications.show({
+        title: "Error",
+        message: error.message,
+      });
+    },
+  });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    mutate.mutate(data);
   });
 
   return (

@@ -1,7 +1,9 @@
 import { Button } from "@mantine/core";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom/dist";
+import { Link, useNavigate } from "react-router-dom/dist";
 import { notifications } from "@mantine/notifications";
+import * as apiClient from "../services/userService";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const Register = () => {
   const {
@@ -10,19 +12,36 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const mutate = useMutation({
+    mutationFn: apiClient.register,
+    onSuccess: async () => {
+      notifications.show({
+        title: "Success",
+        message: "User registered successfully.",
+      });
+      await queryClient.invalidateQueries("validateToken");
+      navigate("/");
+    },
+
+    onError: (error) => {
+      notifications.show({
+        title: "Error",
+        message: error.message,
+      });
+    },
+  });
 
   const onSubmit = handleSubmit((data) => {
-    notifications.show({
-      title: "Test",
-      message: "Test Register"
-    })
-    console.log(data);
+    mutate.mutate(data);
   });
 
   return (
     <>
       <div className="h-screen flex items-center justify-center">
-        <form className="flex flex-col gap-5" onSubmit={onSubmit}  >
+        <form className="flex flex-col gap-5" onSubmit={onSubmit}>
           <h2 className="text-3xl font-bold">Create an Account</h2>
           <div className="flex flex-col md:flex-row gap-5">
             <label className="text-gray-700 text-sm font-bold flex-1">
@@ -111,9 +130,12 @@ const Register = () => {
             )}
           </label>
           <div className="flex items-center justify-between">
-          <span className="text-sm">
-          Already have an account? <Link className="underline" to="/login">Login here</Link>
-        </span>
+            <span className="text-sm">
+              Already have an account?{" "}
+              <Link className="underline" to="/login">
+                Login here
+              </Link>
+            </span>
             <Button type="submit">Register</Button>
           </div>
         </form>

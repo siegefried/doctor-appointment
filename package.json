@@ -14,5 +14,8 @@
     "frontend",
     "backend"
   ],
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@tanstack/react-query-devtools": "^4.36.1"
+  }
 }

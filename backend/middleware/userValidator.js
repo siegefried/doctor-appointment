@@ -10,6 +10,13 @@ const createValidators = () => [
   }),
 ];
 
+const loginValidators = () => [
+  check("email", "Email is required").isEmail(),
+  check("password", "Password with 6 or more characters required").isLength({
+    min: 6,
+  }),
+];
+
 const reporter = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -20,4 +27,5 @@ const reporter = (req, res, next) => {
 
 module.exports = {
   add: [createValidators(), reporter],
+  login: [loginValidators(), reporter],
 };
