@@ -14,7 +14,7 @@ function App() {
       <MantineProvider>
         <Notifications position="top-center" />
         <h1>Placeholder</h1>
-        {isLoggedIn ? "Logged in" : "Not logged in"}  
+        {isLoggedIn ? "Logged in" : "Not logged in"}
         <Routes>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>

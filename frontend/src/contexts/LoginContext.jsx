@@ -5,7 +5,7 @@ import { validateToken } from "../services/userService";
 const LoginContext = createContext(undefined);
 
 export const LoginContextProvider = ({ children }) => {
-  const { isError } = useQuery({
+  const { data, isError } = useQuery({
     queryKey: ["validateToken"],
     queryFn: validateToken,
     retry: false,
@@ -15,6 +15,7 @@ export const LoginContextProvider = ({ children }) => {
     <LoginContext.Provider
       value={{
         isLoggedIn: !isError,
+        user: data,
       }}
     >
       {children}
@@ -24,6 +25,5 @@ export const LoginContextProvider = ({ children }) => {
 
 export const useLoginContext = () => {
   const context = useContext(LoginContext);
-  console.log(context);
   return context;
 };

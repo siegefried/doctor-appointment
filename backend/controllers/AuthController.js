@@ -15,7 +15,7 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = sign({ userId: user.id }, process.env.JWT_SECRET, {
+    const token = sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
     res.cookie("auth_token", token, {

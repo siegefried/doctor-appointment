@@ -14,7 +14,7 @@ const create = async (req, res) => {
 
     const user = new User(data);
     await user.save();
-    const token = sign({ userId: user.id }, process.env.JWT_SECRET, {
+    const token = sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
     res.cookie("auth_token", token, {

@@ -35,6 +35,7 @@ const Register = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
+    data.role = "user";
     mutate.mutate(data);
   });
 
