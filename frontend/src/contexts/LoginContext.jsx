@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { validateToken } from "../services/userService";
 
-const LoginContext = createContext(false);
+const LoginContext = createContext(undefined);
 
 export const LoginContextProvider = ({ children }) => {
   const { isError } = useQuery({
