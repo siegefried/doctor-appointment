@@ -21,8 +21,9 @@ const create = async (req, res) => {
 };
 
 const index = async (req, res) => {
+    const { query } = req;
   try {
-    const doctors = await Doctor.find({});
+    const doctors = await Doctor.find(query);
     return res.status(200).json(doctors);
   } catch (error) {
     console.error(error);

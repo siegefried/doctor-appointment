@@ -17,7 +17,7 @@ export const create = async (formData) => {
   }
 };
 
-export const index = async () => {
+export const getDoctors = async () => {
   const response = await fetch(`${BASE_URL}/api/doctors`, {
     method: "GET",
     credentials: "include",

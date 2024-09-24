@@ -34,6 +34,24 @@ const Sidebar = () => {
     },
   ];
 
+  const doctorMenu = [
+    {
+      name: "Dashboard",
+      link: "/dashboard",
+      icon: <FaHome />,
+    },
+    {
+      name: "Appointments",
+      link: "/appointments",
+      icon: <FaListAlt />,
+    },
+    {
+      name: "Profile",
+      link: "/profile",
+      icon: <FaUser />,
+    },
+  ]
+
   const userMenu = [
     {
       name: "Dashboard",
@@ -52,7 +70,7 @@ const Sidebar = () => {
     },
   ];
 
-  const menuToRender = user?.role === "admin" ? adminMenu : userMenu;
+  const menuToRender = user?.role === "admin" ? adminMenu : user?.role === "doctor" ? doctorMenu : userMenu
 
   return (
     <div className="p-2 sidebar rounded-md shadow shadow-gray-400 bg-blue-600 mr-5 min-h-screen min-w-40">

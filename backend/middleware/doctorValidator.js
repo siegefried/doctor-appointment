@@ -1,6 +1,7 @@
 const { check, validationResult } = require("express-validator");
 
 const createValidators = () => [
+  check("userId", "User id is required").isString(),
   check("firstName", "First name is required").isString(),
   check("lastName", "Last name is required").isString(),
   check("contact", "Contact is required").isString(),
@@ -10,9 +11,9 @@ const createValidators = () => [
   check("specialization", "Specialization is required").isString(),
   check("experience", "Experience is required").isString(),
   check("costPerConsult", "Cost per booking is required").isNumeric(),
-//   check("schedule", "Schedule is required").isArray({
-//     min: 1,
-//   }),
+  //   check("schedule", "Schedule is required").isArray({
+  //     min: 2,
+  //   }),
 ];
 
 const reporter = (req, res, next) => {

@@ -14,14 +14,6 @@ const create = async (req, res) => {
 
     const user = new User(data);
     await user.save();
-    const token = sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
-    res.cookie("auth_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 86400000,
-    });
     return res.status(200).json({ message: "User registration successful" });
   } catch (error) {
     console.error(error);
@@ -29,4 +21,15 @@ const create = async (req, res) => {
   }
 };
 
-module.exports = { create };
+const index = async (req, res) => {
+  const { query } = req;
+try {
+  const users = await User.find(query);
+  return res.status(200).json(users);
+} catch (error) {
+  console.error(error);
+  res.status(500).send({ message: "Something went wrong" });
+}
+};
+
+module.exports = { create, index };

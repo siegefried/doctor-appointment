@@ -1,15 +1,16 @@
 import { Button } from "@mantine/core";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom/dist";
 import { notifications } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as apiClient from "../services/doctorService";
 import { TimeInput } from "@mantine/dates";
+import * as userService from "../services/userService";
 
 const AddDoctorForm = () => {
   const {
     register,
-    watch,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -35,9 +36,14 @@ const AddDoctorForm = () => {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
+    data.password = "123456";
+    data.role = "doctor";
+    await userService.register(data);
+    const user = await userService.getUserByEmail(data.email);
+    data.userId = user[0]._id;
+    // data.schedule = [data.startTime, data.endTime];
     mutation.mutate(data);
-    // console.log(data);
   });
 
   return (
@@ -98,7 +104,7 @@ const AddDoctorForm = () => {
               )}
             </label>
           </div>
-          <h4>Profesional Info</h4>
+          <h4>Professional Info</h4>
           <label className="text-gray-700 text-sm font-bold flex-1">
             Website
             <input
@@ -165,34 +171,47 @@ const AddDoctorForm = () => {
               </span>
             )}
           </label>
-          {/* <h4>Schedule</h4>
-          <div className="flex flex-col md:flex-row gap-5">
-            <label className="text-gray-700 text-sm font-bold flex-1">
-              Start Time
-              <TimeInput />
-              <input
-                className="border rounded w-full py-1 px-2 font-normal"
-                {...register("startTime", {
-                  required: "This field is required.",
-                })}
-              ></input>
-              {errors.startTime && (
-                <span className="text-red-500">{errors.startTime.message}</span>
-              )}
-            </label>
-            <label className="text-gray-700 text-sm font-bold flex-1">
-              End Time
-              <TimeInput />
-              <input
-                className="border rounded w-full py-1 px-2 font-normal"
-                {...register("endTime", {
-                  required: "This field is required.",
-                })}
-              ></input>
-              {errors.endTime && (
-                <span className="text-red-500">{errors.endTime.message}</span>
-              )}
-            </label>
+          {/* <div className="flex flex-col md:flex-row gap-5">
+          <label className="text-gray-700 text-sm font-bold flex-1">
+            Start Time
+          <Controller
+          control={control}
+          name="startTime"
+          rules={{ required: "This field is required." }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TimeInput
+              onChange={onChange} // send value to hook form
+              onBlur={onBlur} // notify when input is touched/blur
+              selected={value}
+            />
+          )}
+          />
+          {errors.startTime && (
+              <span className="text-red-500">
+                {errors.startTime.message}
+              </span>
+            )}
+          </label>
+          <label className="text-gray-700 text-sm font-bold flex-1">
+            End Time
+          <Controller
+          control={control}
+          name="endTime"
+          rules={{ required: "This field is required." }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TimeInput
+              onChange={onChange}
+              onBlur={onBlur}
+              selected={value}
+            />
+          )}
+          />
+          {errors.endTime && (
+              <span className="text-red-500">
+                {errors.endTime.message}
+              </span>
+            )}
+          </label>
           </div> */}
           <div className="flex items-center justify-between">
             <span></span>

@@ -15,6 +15,8 @@ export const register = async (formData) => {
   if (!response.ok) {
     throw new Error(responseBody.message);
   }
+
+  return responseBody;
 };
 
 export const validateToken = async () => {
@@ -56,3 +58,15 @@ export const logout = async () => {
     throw new Error("Error during sign out");
   }
 };
+
+export const getUserByEmail = async (email) => {
+  const appendQuery = `?email=${email}`;
+  const response = await fetch(`${BASE_URL}/api/users${appendQuery}`, {
+    credentials: "include",
+  });
+  const body = await response.json();
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+  return body;
+}

@@ -23,7 +23,7 @@ const Register = () => {
         message: "User registered successfully.",
       });
       await queryClient.invalidateQueries("validateToken");
-      navigate("/");
+      navigate("/login");
     },
 
     onError: (error) => {
