@@ -7,9 +7,10 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import { useLoginContext } from "./contexts/LoginContext";
 import Dashboard from "./pages/Dashboard";
+import AddDoctor from "./pages/AddDoctor";
 
 function App() {
-  const { isLoggedIn } = useLoginContext();
+  const { isLoggedIn, user } = useLoginContext();
   return (
       <MantineProvider>
         <Notifications position="top-center" />
@@ -19,6 +20,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/" element={<Dashboard />}></Route>
+          <Route path="/doctors/new" element={<AddDoctor />}></Route>
         </Routes>
       </MantineProvider>
   );

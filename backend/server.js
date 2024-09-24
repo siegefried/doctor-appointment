@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+const doctorsRouter = require("./routes/doctors");
 const port = process.env.port || 3000;
 
 app.use(morgan("dev"));
@@ -22,6 +23,7 @@ app.use(
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/doctors", doctorsRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

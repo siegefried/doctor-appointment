@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const mutate = useMutation({
+  const mutation = useMutation({
     mutationFn: apiClient.login,
     onSuccess: async () => {
       notifications.show({
@@ -34,7 +34,7 @@ const Login = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    mutate.mutate(data);
+    mutation.mutate(data);
   });
 
   return (

@@ -15,7 +15,7 @@ const Register = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const mutate = useMutation({
+  const mutation = useMutation({
     mutationFn: apiClient.register,
     onSuccess: async () => {
       notifications.show({
@@ -36,7 +36,7 @@ const Register = () => {
 
   const onSubmit = handleSubmit((data) => {
     data.role = "user";
-    mutate.mutate(data);
+    mutation.mutate(data);
   });
 
   return (

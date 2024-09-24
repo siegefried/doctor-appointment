@@ -31,7 +31,7 @@ const login = async (req, res) => {
 };
 
 const verify = (req, res) => {
-  res.status(200).json({ userId: req.userId });
+  res.status(200).json({ userId: req.userId, role: req.role });
 };
 
 const logout = (req, res) => {
