@@ -20,4 +20,14 @@ const create = async (req, res) => {
   }
 };
 
-module.exports = { create };
+const index = async (req, res) => {
+  try {
+    const doctors = await Doctor.find({});
+    return res.status(200).json(doctors);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Something went wrong" });
+  }
+};
+
+module.exports = { create, index };

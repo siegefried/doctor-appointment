@@ -1,5 +1,5 @@
-import AddDoctorForm from "../forms/AddDoctorForm";
-import Layout from "../layouts/Layout";
+import AddDoctorForm from "../../forms/AddDoctorForm";
+import Layout from "../../layouts/Layout";
 
 const AddDoctor = () => {
   return (

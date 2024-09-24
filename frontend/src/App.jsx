@@ -7,22 +7,22 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import { useLoginContext } from "./contexts/LoginContext";
 import Dashboard from "./pages/Dashboard";
-import AddDoctor from "./pages/AddDoctor";
+import AddDoctor from "./pages/Admin/AddDoctor";
 
 function App() {
   const { isLoggedIn, user } = useLoginContext();
   return (
-      <MantineProvider>
-        <Notifications position="top-center" />
-        <h1>Placeholder</h1>
-        {isLoggedIn ? "Logged in" : "Not logged in"}
-        <Routes>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/" element={<Dashboard />}></Route>
-          <Route path="/doctors/new" element={<AddDoctor />}></Route>
-        </Routes>
-      </MantineProvider>
+    <MantineProvider>
+      <Notifications position="top-center" />
+      <h1>Placeholder</h1>
+      {isLoggedIn ? "Logged in" : "Not logged in"}
+      <Routes>
+        <Route path="/register" element={<Register />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/" element={<Dashboard />}></Route>
+        <Route path="/doctors/new" element={<AddDoctor />}></Route>
+      </Routes>
+    </MantineProvider>
   );
 }
 
