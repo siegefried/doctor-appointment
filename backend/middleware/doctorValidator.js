@@ -9,7 +9,7 @@ const createValidators = () => [
   check("website", "Website is required").isString(),
   check("address", "Address is required").isString(),
   check("specialization", "Specialization is required").isString(),
-  check("experience", "Experience is required").isString(),
+  check("experience", "Experience is required").isNumeric(),
   check("costPerConsult", "Cost per booking is required").isNumeric(),
     check("schedule", "Schedule is required").isArray({
       min: 2,

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Layout from "../layouts/Layout";
 import { getDoctors } from "../services/doctorService";
+import { Grid, GridCol } from "@mantine/core";
+import Doctor from "../components/Doctor";
 
 const Dashboard = () => {
   const [doctors, setDoctors] = useState([]);
@@ -15,7 +17,14 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <h1>Dashboard</h1>
+      <Grid>
+        {doctors.map((doctor) => (
+          <GridCol key={doctor._id} span={4}>
+            <Doctor doctor={doctor} />
+          </GridCol>
+        ))}
+      </Grid>
+      
     </Layout>
   );
 };

@@ -10,7 +10,7 @@ const doctorSchema = new Schema(
     website: { type: String, required: true },
     address: { type: String, required: true },
     specialization: { type: String, required: true },
-    experience: { type: String, required: true },
+    experience: { type: Number, required: true },
     costPerConsult: { type: Number, required: true },
     schedule: { type: Array,  required: true },
   },

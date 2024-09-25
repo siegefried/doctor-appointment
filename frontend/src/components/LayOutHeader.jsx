@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const LayOutHeader = () => {
   const { user } = useLoginContext();
   const [userInfo, setUserInfo] = useState({});
-  // const navigate = useNavigate();
 
   useEffect(() => {
     const loadUserInfo = async () => {
@@ -17,6 +16,7 @@ const LayOutHeader = () => {
     };
     loadUserInfo();
   }, []);
+
   return (
     <div className="flex items-center justify-between header bg-white rounded-md shadow shadow-gray-400 mb-5 min-h-20 w-full pr-6">
       <span></span>

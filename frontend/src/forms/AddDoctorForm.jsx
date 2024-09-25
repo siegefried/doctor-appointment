@@ -33,7 +33,7 @@ const AddDoctorForm = () => {
         message: "Doctor registered successfully.",
       });
       //   await queryClient.invalidateQueries("validateToken"); need to change to re-render for doctors
-      navigate("/");
+      navigate("/dashboard");
     },
 
     onError: (error) => {
@@ -50,8 +50,8 @@ const AddDoctorForm = () => {
     await userService.register(data);
     const user = await userService.getUserByEmail(data.email);
     data.userId = user[0]._id;
-    data.startTime = dayjs(data.startTime, "HH:mm");
-    data.endTime = dayjs(data.endTime, "HH:mm");
+    // data.startTime = dayjs(data.startTime, "HH:mm");
+    // data.endTime = dayjs(data.endTime, "HH:mm");
     data.schedule = [data.startTime, data.endTime];
     mutation.mutate(data);
   });
@@ -151,8 +151,10 @@ const AddDoctorForm = () => {
               )}
             </label>
             <label className="text-gray-700 text-sm font-bold flex-1">
-              Experience
+              Years of Experience
               <input
+                type="number"
+                min={0}
                 className="border rounded w-full py-1 px-2 font-normal"
                 {...register("experience", {
                   required: "This field is required.",
@@ -182,48 +184,44 @@ const AddDoctorForm = () => {
             )}
           </label>
           <div className="flex flex-col md:flex-row gap-5">
-          <label className="text-gray-700 text-sm font-bold flex-1">
-            Start Time
-          <Controller
-          control={control}
-          name="startTime"
-          rules={{ required: "This field is required." }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TimeInput
-              onChange={onChange}
-              onBlur={onBlur}
-              selected={value}
-            />
-          )}
-          />
-          {errors.startTime && (
-              <span className="text-red-500">
-                {errors.startTime.message}
-              </span>
-            )}
-          </label>
-          <label className="text-gray-700 text-sm font-bold flex-1">
-            End Time
-          <Controller
-          control={control}
-          name="endTime"
-          rules={{ required: "This field is required." }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TimeInput
-              onChange={onChange}
-              onBlur={onBlur}
-              selected={value}
-            />
-          )}
-          />
-          {errors.endTime && (
-              <span className="text-red-500">
-                {errors.endTime.message}
-              </span>
-            )}
-          </label>
+            <label className="text-gray-700 text-sm font-bold flex-1">
+              Start Time
+              <Controller
+                control={control}
+                name="startTime"
+                rules={{ required: "This field is required." }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TimeInput
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    selected={value}
+                  />
+                )}
+              />
+              {errors.startTime && (
+                <span className="text-red-500">{errors.startTime.message}</span>
+              )}
+            </label>
+            <label className="text-gray-700 text-sm font-bold flex-1">
+              End Time
+              <Controller
+                control={control}
+                name="endTime"
+                rules={{ required: "This field is required." }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TimeInput
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    selected={value}
+                  />
+                )}
+              />
+              {errors.endTime && (
+                <span className="text-red-500">{errors.endTime.message}</span>
+              )}
+            </label>
           </div>
-          
+
           <div className="flex items-center justify-between">
             <span></span>
             <Button type="submit">Add Doctor</Button>
