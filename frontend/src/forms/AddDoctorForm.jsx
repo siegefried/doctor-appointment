@@ -47,13 +47,13 @@ const AddDoctorForm = () => {
   const onSubmit = handleSubmit(async (data) => {
     data.password = "123456";
     data.role = "doctor";
-    // await userService.register(data);
-    // const user = await userService.getUserByEmail(data.email);
-    // data.userId = user[0]._id;
+    await userService.register(data);
+    const user = await userService.getUserByEmail(data.email);
+    data.userId = user[0]._id;
     data.startTime = dayjs(data.startTime, "HH:mm");
     data.endTime = dayjs(data.endTime, "HH:mm");
-    // data.schedule = [data.startTime, data.endTime];
-    // mutation.mutate(data);
+    data.schedule = [data.startTime, data.endTime];
+    mutation.mutate(data);
   });
 
   return (
@@ -190,8 +190,8 @@ const AddDoctorForm = () => {
           rules={{ required: "This field is required." }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TimeInput
-              onChange={onChange} // send value to hook form
-              onBlur={onBlur} // notify when input is touched/blur
+              onChange={onChange}
+              onBlur={onBlur}
               selected={value}
             />
           )}

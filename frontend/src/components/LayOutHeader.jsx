@@ -1,0 +1,32 @@
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { useLoginContext } from "../contexts/LoginContext";
+import { useState, useEffect } from "react";
+import { getCurrentUser } from "../services/userService";
+import { Badge } from "@mantine/core";
+
+const LayOutHeader = () => {
+  const { user } = useLoginContext();
+  const [userInfo, setUserInfo] = useState({});
+
+  useEffect(() => {
+    const loadUserInfo = async () => {
+      const response = await getCurrentUser();
+      setUserInfo(response);
+    };
+    loadUserInfo();
+  }, []);
+  return (
+    <div className="flex items-center justify-between header bg-white rounded-md shadow shadow-gray-400 mb-5 min-h-20 w-full pr-6">
+      <span></span>
+      <div className="flex items-center">
+      <IoMdNotificationsOutline size={28} />
+        <Badge size="xl" circle>
+          <span>{userInfo?.unReadNotifications?.length}</span>
+        </Badge>
+        <p className="pl-2">{user?.username}</p>
+      </div>
+    </div>
+  );
+};
+
+export default LayOutHeader;

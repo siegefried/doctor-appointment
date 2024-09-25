@@ -1,6 +1,7 @@
 import { AppShell, Burger } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Sidebar from "../components/SideBar";
+import LayOutHeader from "../components/LayOutHeader";
 
 const Layout = ({ children }) => {
   const [opened, { toggle }] = useDisclosure();
@@ -9,9 +10,7 @@ const Layout = ({ children }) => {
       <div className="flex">
         <Sidebar />
         <div className="content w-full">
-          <div className="flex items-center justify-between header bg-white rounded-md shadow shadow-gray-400 mb-5 min-h-20 w-full">
-            header
-          </div>
+          <LayOutHeader />
           <div className="body bg-white rounded-md shadow shadow-gray-400 min-h-80 w-full">
             {children}
           </div>

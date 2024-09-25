@@ -22,7 +22,7 @@ const Login = () => {
         message: "Logged in.",
       });
       await queryClient.invalidateQueries("validateToken");
-      navigate("/");
+      navigate("/dashboard");
     },
 
     onError: (error) => {

@@ -23,13 +23,25 @@ const create = async (req, res) => {
 
 const index = async (req, res) => {
   const { query } = req;
-try {
-  const users = await User.find(query);
-  return res.status(200).json(users);
-} catch (error) {
-  console.error(error);
-  res.status(500).send({ message: "Something went wrong" });
-}
+  try {
+    const users = await User.find(query);
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Something went wrong" });
+  }
 };
 
-module.exports = { create, index };
+const getCurrentUser = async (req, res) => {
+  const { userId } = req;
+
+  try {
+    const user = await User.findById(userId);
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Something went wrong" });
+  }
+};
+
+module.exports = { create, index, getCurrentUser };

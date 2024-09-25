@@ -69,4 +69,15 @@ export const getUserByEmail = async (email) => {
     throw new Error(body.message);
   }
   return body;
-}
+};
+
+export const getCurrentUser = async () => {
+  const response = await fetch(`${BASE_URL}/api/users/current-user`, {
+    credentials: "include",
+  });
+  const body = await response.json();
+  if (!response.ok) {
+    throw new Error(body.message);
+  }
+  return body;
+};

@@ -10,6 +10,7 @@ const verifyToken = (req, res, next) => {
     const decoded = verify(token, process.env.JWT_SECRET);
     req.userId = decoded.userId;
     req.role = decoded.role;
+    req.userName = decoded.userName
     next();
   } catch (error) {
     return res.status(401).json({ message: "Unauthorized" });
