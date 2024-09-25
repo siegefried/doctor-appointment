@@ -6,6 +6,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as apiClient from "../services/doctorService";
 import { TimeInput } from "@mantine/dates";
 import * as userService from "../services/userService";
+import dayjs from "dayjs";
+import objectSupport from "dayjs/plugin/objectSupport.js";
+import customParseFormat from "dayjs/plugin/customParseFormat.js";
+import "dayjs/locale/en-sg.js";
+
+dayjs.locale("en-sg");
+dayjs.extend(objectSupport);
+dayjs.extend(customParseFormat);
 
 const AddDoctorForm = () => {
   const {
@@ -39,11 +47,13 @@ const AddDoctorForm = () => {
   const onSubmit = handleSubmit(async (data) => {
     data.password = "123456";
     data.role = "doctor";
-    await userService.register(data);
-    const user = await userService.getUserByEmail(data.email);
-    data.userId = user[0]._id;
+    // await userService.register(data);
+    // const user = await userService.getUserByEmail(data.email);
+    // data.userId = user[0]._id;
+    data.startTime = dayjs(data.startTime, "HH:mm");
+    data.endTime = dayjs(data.endTime, "HH:mm");
     // data.schedule = [data.startTime, data.endTime];
-    mutation.mutate(data);
+    // mutation.mutate(data);
   });
 
   return (
@@ -171,7 +181,7 @@ const AddDoctorForm = () => {
               </span>
             )}
           </label>
-          {/* <div className="flex flex-col md:flex-row gap-5">
+          <div className="flex flex-col md:flex-row gap-5">
           <label className="text-gray-700 text-sm font-bold flex-1">
             Start Time
           <Controller
@@ -212,7 +222,8 @@ const AddDoctorForm = () => {
               </span>
             )}
           </label>
-          </div> */}
+          </div>
+          
           <div className="flex items-center justify-between">
             <span></span>
             <Button type="submit">Add Doctor</Button>

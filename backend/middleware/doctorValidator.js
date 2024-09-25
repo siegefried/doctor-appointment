@@ -11,9 +11,9 @@ const createValidators = () => [
   check("specialization", "Specialization is required").isString(),
   check("experience", "Experience is required").isString(),
   check("costPerConsult", "Cost per booking is required").isNumeric(),
-  //   check("schedule", "Schedule is required").isArray({
-  //     min: 2,
-  //   }),
+    check("schedule", "Schedule is required").isArray({
+      min: 2,
+    }),
 ];
 
 const reporter = (req, res, next) => {

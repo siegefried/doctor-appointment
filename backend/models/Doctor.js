@@ -12,7 +12,7 @@ const doctorSchema = new Schema(
     specialization: { type: String, required: true },
     experience: { type: String, required: true },
     costPerConsult: { type: Number, required: true },
-    // schedule: { type: Array, required: true },
+    schedule: { type: Array,  required: true },
   },
   {
     timestamps: true,
