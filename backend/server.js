@@ -8,6 +8,8 @@ const cookieParser = require("cookie-parser");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const doctorsRouter = require("./routes/doctors");
+const appointmentsRouter = require("./routes/appointments");
+const { verifyToken } = require("./middleware/auth");
 const port = process.env.port || 3000;
 
 app.use(morgan("dev"));
@@ -24,6 +26,7 @@ app.use(
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/doctors", doctorsRouter);
+app.use("/api/appointments", verifyToken, appointmentsRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

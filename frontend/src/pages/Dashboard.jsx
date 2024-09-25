@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout";
 import { getDoctors } from "../services/doctorService";
 import { Grid, GridCol } from "@mantine/core";
 import Doctor from "../components/Doctor";
-import { DatePicker, DatePickerInput } from "@mantine/dates";
 
 const Dashboard = () => {
   const [doctors, setDoctors] = useState([]);

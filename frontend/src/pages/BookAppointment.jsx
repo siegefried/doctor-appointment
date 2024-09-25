@@ -3,10 +3,19 @@ import Layout from "../layouts/Layout";
 import { getDoctorById } from "../services/doctorService";
 import { useState, useEffect } from "react";
 import { useLoginContext } from "../contexts/LoginContext";
-import { Paper, Text, Group, Badge, Card, Divider, Button } from "@mantine/core";
+import {
+  Paper,
+  Text,
+  Group,
+  Badge,
+  Card,
+  Divider,
+  Button,
+} from "@mantine/core";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 import dayjs from "dayjs";
 import { Controller, useForm } from "react-hook-form";
+import * as apiClient from "../services/appointmentService";
 
 const BookAppointment = () => {
   const { user } = useLoginContext();
@@ -27,8 +36,14 @@ const BookAppointment = () => {
     loadDoctor();
   }, [doctorId]);
 
-  const onSubmit = handleSubmit(async (data) => {
+  const checkAvailability = handleSubmit(async (data) => {
     console.log(data);
+  });
+
+  const onSubmit = handleSubmit(async (data) => {
+    data.doctorId = doctor._id;
+    data.userId = user.userId;
+    apiClient.create(data);
   });
 
   return (
@@ -51,48 +66,56 @@ const BookAppointment = () => {
           </Paper>
           <Divider my="sm" />
           <div className="flex justify-between">
-            
-            <form className="flex gap-5" onSubmit={onSubmit}>
-            <Group>
-              <Controller
-                control={control}
-                name="apptDate"
-                rules={{ required: "This field is required." }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <DatePickerInput
-                    label="Appointment Date"
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    selected={value}
-                    p="xl"
-                    placeholder="Select Date"
-                    minDate={new Date()}
-                    maxDate={dayjs(new Date()).add(3, "month").toDate()}
-                    firstDayOfWeek={0}
-                  />
+            <form className="flex gap-5">
+              <Group>
+                <Controller
+                  control={control}
+                  name="date"
+                  rules={{ required: "This field is required." }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <DatePickerInput
+                      label="Appointment Date"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      selected={value}
+                      p="xl"
+                      placeholder="Select Date"
+                      minDate={new Date()}
+                      maxDate={dayjs(new Date()).add(3, "month").toDate()}
+                      firstDayOfWeek={0}
+                    />
+                  )}
+                />
+                {errors.apptTime && (
+                  <span className="text-red-500">
+                    {errors.apptTime.message}
+                  </span>
                 )}
-              />
-              {errors.apptTime && (
-                <span className="text-red-500">{errors.apptTime.message}</span>
-              )}
-              <Controller
-                control={control}
-                name="apptTime"
-                rules={{ required: "This field is required." }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <TimeInput
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    selected={value}
-                    p="xl"
-                    label="Appointment Time"
-                  />
+                <Controller
+                  control={control}
+                  name="time"
+                  rules={{ required: "This field is required." }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TimeInput
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      selected={value}
+                      p="xl"
+                      label="Appointment Time"
+                    />
+                  )}
+                />
+                {errors.apptTime && (
+                  <span className="text-red-500">
+                    {errors.apptTime.message}
+                  </span>
                 )}
-              />
-              {errors.apptTime && (
-                <span className="text-red-500">{errors.apptTime.message}</span>
-              )}
-              <Button ml="xl" type="submit">Check Availability</Button>
+                <Button ml="xl" onClick={checkAvailability}>
+                  Check Availability
+                </Button>
+                <Button ml="xl" onClick={onSubmit}>
+                  Book Appt
+                </Button>
               </Group>
             </form>
             <Card shadow="sm" p="lg" radius="md">
