@@ -31,4 +31,21 @@ const index = async (req, res) => {
   }
 };
 
-module.exports = { create, index };
+const show = async (req, res) => {
+  const { doctorId } = req.params;
+  if (!doctorId) {
+    return res.status(400).json({ message: "Invalid request." });
+  }
+  try {
+    const doctor = await Doctor.findById(doctorId);
+    if (doctor === null) {
+      return res.status(404).json({ message: "Doctor not found." });
+    }
+    return res.status(200).json(doctor);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Something went wrong" });
+  }
+};
+
+module.exports = { create, index, show };

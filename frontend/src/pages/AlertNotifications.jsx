@@ -25,12 +25,12 @@ const AlertNotifications = () => {
 
         <Tabs.Panel value="unread">
           <div className="flex justify-end">
-            <h3 className="underline underline-offset-8 pr-4 pt-4 text-sm">
+            <h3 className="underline underline-offset-8 pr-4 pt-4 text-sm cursor-pointer">
               Mark All as Seen
             </h3>
           </div>
 
-          {userInfo.unReadNotifications.map((notification, index) => (
+          {userInfo?.unReadNotifications?.map((notification, index) => (
               <div className="p-2" key={index}>
                 <Card>{notification.message}</Card>
               </div>
@@ -39,7 +39,7 @@ const AlertNotifications = () => {
 
         <Tabs.Panel value="read">
           <div className="flex justify-end">
-            <h3 className="underline underline-offset-8 pr-4 pt-4 text-sm">
+            <h3 className="underline underline-offset-8 pr-4 pt-4 text-sm cursor-pointer">
               Delete All
             </h3>
           </div>

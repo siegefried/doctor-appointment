@@ -31,7 +31,7 @@ const LogoutButton = () => {
   };
 
   return (
-    <div className="flex items-center justify-between mt-8 rounded-md hover:bg-blue-400" onClick={handleClick}>
+    <div className="flex items-center justify-between mt-8 rounded-md hover:bg-blue-400 cursor-pointer" onClick={handleClick}>
       <div className="menu-icon text-white">{<FaSignOutAlt />}</div>                                                                                                                                                                                                                                
       <div className="menu-item text-white">Logout</div>
     </div>

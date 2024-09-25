@@ -1,10 +1,11 @@
-import { AppShell, Burger } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+// import { AppShell, Burger } from "@mantine/core";
+// import { useDisclosure } from "@mantine/hooks";
 import Sidebar from "../components/SideBar";
 import LayOutHeader from "../components/LayOutHeader";
+// import { Outlet } from "react-router-dom";
 
 const Layout = ({ children }) => {
-  const [opened, { toggle }] = useDisclosure();
+  // const [opened, { toggle }] = useDisclosure();
   return (
     <div className="p-5">
       <div className="flex">

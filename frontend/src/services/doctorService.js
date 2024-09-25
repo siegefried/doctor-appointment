@@ -25,12 +25,24 @@ export const getDoctors = async () => {
       "Content-Type": "application/json",
     },
   });
-
   const responseBody = await response.json();
-
   if (!response.ok) {
     throw new Error(responseBody.message);
   }
+  return responseBody;
+};
 
+export const getDoctorById = async (doctorId) => {
+  const response = await fetch(`${BASE_URL}/api/doctors/${doctorId}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }); 
+  const responseBody = await response.json();
+  if (!response.ok) {
+    throw new Error(responseBody.message);
+  }
   return responseBody;
 };

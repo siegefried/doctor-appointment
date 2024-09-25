@@ -9,6 +9,7 @@ import { useLoginContext } from "./contexts/LoginContext";
 import Dashboard from "./pages/Dashboard";
 import AddDoctor from "./pages/Admin/AddDoctor";
 import AlertNotifications from "./pages/AlertNotifications";
+import BookAppointment from "./pages/BookAppointment";
 
 function App() {
   const { isLoggedIn, user } = useLoginContext();
@@ -21,6 +22,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/doctors/new" element={<AddDoctor />}></Route>
         <Route path="/notifications" element={<AlertNotifications />}></Route>
+        <Route path="/book/:doctorId" element={<BookAppointment />}></Route>
       </Routes>
     </MantineProvider>
   );
