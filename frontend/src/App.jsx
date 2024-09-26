@@ -13,7 +13,7 @@ import BookAppointment from "./pages/BookAppointment";
 import Appointments from "./pages/Appointments";
 
 function App() {
-  const { isLoggedIn, user } = useLoginContext();
+  const { isLoggedIn } = useLoginContext();
   return (
     <MantineProvider>
       <Notifications position="top-center" />

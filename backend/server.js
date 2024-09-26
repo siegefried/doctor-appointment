@@ -30,7 +30,7 @@ app.use(
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/doctors", doctorsRouter);
-app.use("/api/appointments", appointmentsRouter); //add verify token middleware
+app.use("/api/appointments", verifyToken, appointmentsRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
