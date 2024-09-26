@@ -11,6 +11,7 @@ const doctorsRouter = require("./routes/doctors");
 const appointmentsRouter = require("./routes/appointments");
 const { verifyToken } = require("./middleware/auth");
 const dayjs = require("dayjs");
+const path = require("path");
 require("dayjs/locale/en-sg");
 const port = process.env.port || 3000;
 
