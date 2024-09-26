@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom/dist";
 import { notifications } from "@mantine/notifications";
 import * as apiClient from "../services/userService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+import Footer from "../components/Footer";
 
 const Register = () => {
   const {
@@ -41,7 +44,9 @@ const Register = () => {
 
   return (
     <>
-      <div className="h-screen flex items-center justify-center">
+    <Header />
+    <Hero />
+      <div className="my-10 flex items-center justify-center">
         <form className="flex flex-col gap-5" onSubmit={onSubmit}>
           <h2 className="text-3xl font-bold">Create an Account</h2>
           <div className="flex flex-col md:flex-row gap-5">
@@ -141,6 +146,7 @@ const Register = () => {
           </div>
         </form>
       </div>
+      <Footer />
     </>
   );
 };
