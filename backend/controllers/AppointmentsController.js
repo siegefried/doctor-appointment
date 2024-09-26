@@ -96,7 +96,7 @@ const checkAvailability = async (req, res) => {
 const index = async (req, res) => {
   const { query } = req;
   try {
-    const appointments = await Appointment.find(query);
+    const appointments = await Appointment.find(query).populate("doctorId").populate("userId");
     return res.status(200).json(appointments);
   } catch (error) {
     console.error(error);

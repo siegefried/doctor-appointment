@@ -46,3 +46,19 @@ export const getDoctorById = async (doctorId) => {
   }
   return responseBody;
 };
+
+export const getDoctorByUserId = async (userId) => {
+  const appendQuery = `?userId=${userId}`;
+  const response = await fetch(`${BASE_URL}/api/doctors${appendQuery}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const responseBody = await response.json();
+  if (!response.ok) {
+    throw new Error(responseBody.message);
+  }
+  return responseBody;
+};

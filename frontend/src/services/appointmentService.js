@@ -18,13 +18,32 @@ export const create = async (formData) => {
 };
 
 export const checkAvailability = async (formData) => {
-  const response = await fetch(`${BASE_URL}/api/appointments/check-availability`, {
-    method: "POST",
+  const response = await fetch(
+    `${BASE_URL}/api/appointments/check-availability`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    }
+  );
+  const responseBody = await response.json();
+  if (!response.ok) {
+    throw new Error(responseBody.message);
+  }
+  return responseBody;
+};
+
+export const getAppointmentsByUserId = async (userId) => {
+  const appendQuery = `?userId=${userId}`;
+  const response = await fetch(`${BASE_URL}/api/appointments${appendQuery}`, {
+    method: "GET",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(formData),
   });
   const responseBody = await response.json();
   if (!response.ok) {
@@ -32,3 +51,19 @@ export const checkAvailability = async (formData) => {
   }
   return responseBody;
 };
+
+export const getAppointmentsByDoctorId = async (doctorId) => {
+  const appendQuery = `?doctorId=${doctorId}`;
+  const response = await fetch(`${BASE_URL}/api/appointments${appendQuery}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const responseBody = await response.json();
+  if (!response.ok) {
+    throw new Error(responseBody.message);
+  }
+  return responseBody;
+}

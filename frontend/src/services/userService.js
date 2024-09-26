@@ -62,7 +62,11 @@ export const logout = async () => {
 export const getUserByEmail = async (email) => {
   const appendQuery = `?email=${email}`;
   const response = await fetch(`${BASE_URL}/api/users${appendQuery}`, {
+    method: "GET",
     credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   const body = await response.json();
   if (!response.ok) {
@@ -73,7 +77,11 @@ export const getUserByEmail = async (email) => {
 
 export const getCurrentUser = async () => {
   const response = await fetch(`${BASE_URL}/api/users/current-user`, {
+    method: "GET",
     credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   const body = await response.json();
   if (!response.ok) {

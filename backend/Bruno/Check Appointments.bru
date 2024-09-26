@@ -4,8 +4,16 @@ meta {
   seq: 8
 }
 
-get {
-  url: http://localhost:3000/api/appointments
-  body: none
+post {
+  url: http://localhost:3000/api/appointments/check-availability
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "doctorId": "66f42b9b6a1b0cf6c3bd476a",
+    "date": "2024-10-04T16:00:00.000+00:00",
+    "time": "13:30"
+  }
 }

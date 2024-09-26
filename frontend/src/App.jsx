@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import AddDoctor from "./pages/Admin/AddDoctor";
 import AlertNotifications from "./pages/AlertNotifications";
 import BookAppointment from "./pages/BookAppointment";
+import Appointments from "./pages/Appointments";
 
 function App() {
   const { isLoggedIn, user } = useLoginContext();
@@ -23,6 +24,7 @@ function App() {
         <Route path="/doctors/new" element={<AddDoctor />}></Route>
         <Route path="/notifications" element={<AlertNotifications />}></Route>
         <Route path="/book/:doctorId" element={<BookAppointment />}></Route>
+        <Route path="/appointments" element={<Appointments />}></Route>
       </Routes>
     </MantineProvider>
   );
