@@ -10,7 +10,11 @@ const authRouter = require("./routes/auth");
 const doctorsRouter = require("./routes/doctors");
 const appointmentsRouter = require("./routes/appointments");
 const { verifyToken } = require("./middleware/auth");
+const dayjs = require("dayjs");
+require("dayjs/locale/en-sg");
 const port = process.env.port || 3000;
+
+dayjs.locale("en-sg");
 
 app.use(morgan("dev"));
 app.use(cookieParser());
@@ -26,7 +30,7 @@ app.use(
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/doctors", doctorsRouter);
-app.use("/api/appointments", verifyToken, appointmentsRouter);
+app.use("/api/appointments", appointmentsRouter); //add verify token middleware
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

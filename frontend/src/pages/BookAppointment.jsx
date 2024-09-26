@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../layouts/Layout";
 import { getDoctorById } from "../services/doctorService";
 import { useState, useEffect } from "react";
@@ -16,12 +16,14 @@ import { DatePickerInput, TimeInput } from "@mantine/dates";
 import dayjs from "dayjs";
 import { Controller, useForm } from "react-hook-form";
 import * as apiClient from "../services/appointmentService";
+import { useMutation } from "@tanstack/react-query";
+import { notifications } from "@mantine/notifications";
 
 const BookAppointment = () => {
   const { user } = useLoginContext();
   const [doctor, setDoctor] = useState();
   const [isAvailable, setIsAvailable] = useState(false);
-
+  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -36,14 +38,52 @@ const BookAppointment = () => {
     loadDoctor();
   }, [doctorId]);
 
+  const query = useMutation({
+    mutationFn: apiClient.checkAvailability,
+    onSuccess: async () => {
+      notifications.show({
+        title: "Success",
+        message: "Appointment slot available.",
+      });
+      setIsAvailable(true);
+    },
+
+    onError: (error) => {
+      notifications.show({
+        title: "Error",
+        message: error.message,
+      });
+      setIsAvailable(false);
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: apiClient.create,
+    onSuccess: async () => {
+      notifications.show({
+        title: "Success",
+        message: "Appointment booked successfully.",
+      });
+      navigate("/appointments");
+    },
+
+    onError: (error) => {
+      notifications.show({
+        title: "Error",
+        message: error.message,
+      });
+    },
+  });
+
   const checkAvailability = handleSubmit(async (data) => {
-    console.log(data);
+    data.doctorId = doctor._id;
+    query.mutate(data);
   });
 
   const onSubmit = handleSubmit(async (data) => {
     data.doctorId = doctor._id;
     data.userId = user.userId;
-    apiClient.create(data);
+    mutation.mutate(data);
   });
 
   return (
@@ -113,9 +153,9 @@ const BookAppointment = () => {
                 <Button ml="xl" onClick={checkAvailability}>
                   Check Availability
                 </Button>
-                <Button ml="xl" onClick={onSubmit}>
+                { isAvailable && <Button ml="xl" onClick={onSubmit}>
                   Book Appt
-                </Button>
+                </Button>}
               </Group>
             </form>
             <Card shadow="sm" p="lg" radius="md">

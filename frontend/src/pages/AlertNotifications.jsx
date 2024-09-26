@@ -2,9 +2,11 @@ import { Card, Tabs } from "@mantine/core";
 import Layout from "../layouts/Layout";
 import { useState, useEffect } from "react";
 import { getCurrentUser } from "../services/userService";
+import { useNavigate } from "react-router-dom";
 
 const AlertNotifications = () => {
   const [userInfo, setUserInfo] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadUserInfo = async () => {
@@ -31,7 +33,7 @@ const AlertNotifications = () => {
           </div>
 
           {userInfo?.unReadNotifications?.map((notification, index) => (
-              <div className="p-2" key={index}>
+              <div className="p-2" key={index} onClick={() => navigate(notification.link)}>
                 <Card>{notification.message}</Card>
               </div>
           ))}

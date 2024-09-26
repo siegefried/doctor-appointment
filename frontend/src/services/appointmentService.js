@@ -16,3 +16,19 @@ export const create = async (formData) => {
     throw new Error(responseBody.message);
   }
 };
+
+export const checkAvailability = async (formData) => {
+  const response = await fetch(`${BASE_URL}/api/appointments/check-availability`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+  const responseBody = await response.json();
+  if (!response.ok) {
+    throw new Error(responseBody.message);
+  }
+  return responseBody;
+};

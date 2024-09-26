@@ -2,7 +2,7 @@ import { Button } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom/dist";
 import { notifications } from "@mantine/notifications";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import * as apiClient from "../services/doctorService";
 import { TimeInput } from "@mantine/dates";
 import * as userService from "../services/userService";
@@ -23,7 +23,6 @@ const AddDoctorForm = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: apiClient.create,
@@ -32,7 +31,6 @@ const AddDoctorForm = () => {
         title: "Success",
         message: "Doctor registered successfully.",
       });
-      //   await queryClient.invalidateQueries("validateToken"); need to change to re-render for doctors
       navigate("/dashboard");
     },
 
