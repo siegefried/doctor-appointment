@@ -26,6 +26,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.static("../frontend/dist"));
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
