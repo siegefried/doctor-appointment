@@ -26,6 +26,7 @@ const BookAppointment = () => {
   const navigate = useNavigate();
   const {
     control,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -37,6 +38,13 @@ const BookAppointment = () => {
     };
     loadDoctor();
   }, [doctorId]);
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      setIsAvailable(false);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   const query = useMutation({
     mutationFn: apiClient.checkAvailability,
@@ -153,9 +161,11 @@ const BookAppointment = () => {
                 <Button ml="xl" onClick={checkAvailability}>
                   Check Availability
                 </Button>
-                { isAvailable && <Button ml="xl" onClick={onSubmit}>
-                  Book Appt
-                </Button>}
+                {isAvailable && (
+                  <Button ml="xl" onClick={onSubmit}>
+                    Book Appt
+                  </Button>
+                )}
               </Group>
             </form>
             <Card shadow="sm" p="lg" radius="md">
