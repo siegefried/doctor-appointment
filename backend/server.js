@@ -28,14 +28,15 @@ app.use(
   })
 );
 app.use(express.static("../frontend/dist"));
-app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, "..", "frontend", "dist", "index.html"));
-});
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/doctors", doctorsRouter);
 app.use("/api/appointments", verifyToken, appointmentsRouter);
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "..", "frontend", "dist", "index.html"));
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
