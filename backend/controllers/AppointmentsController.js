@@ -22,10 +22,10 @@ const create = async (req, res) => {
     doctorUser.unReadNotifications.push({
       type: "new-appointment-request",
       message: `New appointment request from ${patient.firstName} ${patient.lastName}`,
-      link: "/doctor/appointments",
+      link: "/appointments",
     });
     await doctorUser.save();
-    return res.status(200).json(appointment);
+    return res.status(201).json(appointment);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Something went wrong" });
@@ -35,7 +35,6 @@ const create = async (req, res) => {
 const checkAvailability = async (req, res) => {
   const { doctorId, date, time } = req.body;
   const selectedTime = dayjs(time, "HH:mm");
-  console.log(selectedTime);
   const fromTime = selectedTime.subtract(30, "minutes");
   const toTime = selectedTime.add(30, "minutes");
   try {
@@ -96,7 +95,9 @@ const checkAvailability = async (req, res) => {
 const index = async (req, res) => {
   const { query } = req;
   try {
-    const appointments = await Appointment.find(query).populate("doctorId").populate("userId");
+    const appointments = await Appointment.find(query)
+      .populate("doctorId")
+      .populate("userId", "firstName lastName email contact -_id");
     return res.status(200).json(appointments);
   } catch (error) {
     console.error(error);
@@ -104,4 +105,34 @@ const index = async (req, res) => {
   }
 };
 
-module.exports = { create, checkAvailability, index };
+const update = async (req, res) => {
+  const { appointmentId } = req.params;
+  const data = req.body;
+  try {
+    const appointment = await Appointment.findByIdAndUpdate(
+      appointmentId,
+      data,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    return res.status(200).json(appointment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Something went wrong" });
+  }
+};
+
+const destroy = async (req, res) => {
+  const { appointmentId } = req.params;
+  try {
+    await Appointment.findByIdAndDelete(appointmentId);
+    return res.status(204).end();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Something went wrong" });
+  }
+};
+
+module.exports = { create, checkAvailability, index, update, destroy };

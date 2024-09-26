@@ -5,8 +5,7 @@ import "dayjs/locale/en-sg.js";
 
 dayjs.locale("en-sg");
 dayjs.extend(customParseFormat);
-
-const Appointment = ({ appointment, index, handleDelete }) => {
+const AppointmentDoctor = ({ appointment, index, handleEdit }) => {
   let badgeColor = "";
   if (appointment.status === "pending") {
     badgeColor = "gray";
@@ -18,27 +17,31 @@ const Appointment = ({ appointment, index, handleDelete }) => {
     badgeColor = "red";
   }
 
+  const handleApprove = async (index, appointment) => {
+    appointment.status = "approved";
+    handleEdit(index, appointment);
+  };
+
+  const handleReject = async (index, appointment) => {
+    appointment.status = "rejected";
+    handleEdit(index, appointment);
+  };
+
   return (
     <div>
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Group justify="space-between" mt="md" mb="xs">
           <Text fw={700}>
-            {appointment.doctorId.firstName} {appointment.doctorId.lastName}
+            {appointment.userId.firstName} {appointment.userId.lastName}
           </Text>
-          <Badge color="pink">{appointment.doctorId.specialization}</Badge>
         </Group>
 
         <Text size="sm">
           <span className="font-medium">Contact</span>{" "}
-          {appointment.doctorId.contact}
+          {appointment.userId.contact}
         </Text>
         <Text size="sm">
-          <span className="font-medium">Address</span>{" "}
-          {appointment.doctorId.address}
-        </Text>
-        <Text size="sm">
-          <span className="font-medium">Consultation Fee</span> $
-          {appointment.doctorId.costPerConsult}
+          <span className="font-medium">Email</span> {appointment.userId.email}
         </Text>
         <Text size="sm">
           <span className="font-medium">Appointment</span>
@@ -50,18 +53,22 @@ const Appointment = ({ appointment, index, handleDelete }) => {
           <Badge color={badgeColor} mt="md">
             {appointment.status}
           </Badge>
-          <Button
-            color="pink"
-            mt="md"
-            radius="md"
-            onClick={() => handleDelete(index, appointment)}
-          >
-            Cancel Appt
-          </Button>
+          <div className="flex gap-2">
+            {appointment.status === "pending" && (
+              <Button color="red" mt="md" radius="md" onClick={()=>handleReject(index, appointment)}>
+                Reject
+              </Button>
+            )}
+            {appointment.status === "pending" && (
+              <Button color="green" mt="md" radius="md" onClick={()=>handleApprove(index, appointment)}>
+                Approve
+              </Button>
+            )}
+          </div>
         </div>
       </Card>
     </div>
   );
 };
 
-export default Appointment;
+export default AppointmentDoctor;

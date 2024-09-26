@@ -66,4 +66,41 @@ export const getAppointmentsByDoctorId = async (doctorId) => {
     throw new Error(responseBody.message);
   }
   return responseBody;
-}
+};
+
+export const editAppointment = async (appointmentId, formData) => {
+  const response = await fetch(
+    `${BASE_URL}/api/appointments/${appointmentId}`,
+    {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    }
+  );
+  const responseBody = await response.json();
+  if (!response.ok) {
+    throw new Error(responseBody.message);
+  }
+  return responseBody;
+};
+
+export const deleteAppointment = async (appointmentId) => {
+  const response = await fetch(
+    `${BASE_URL}/api/appointments/${appointmentId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const responseBody = await response.json();
+  if (!response.ok) {
+    throw new Error(responseBody.message);
+  }
+  return responseBody;
+};

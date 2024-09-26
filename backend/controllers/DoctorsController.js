@@ -13,7 +13,7 @@ const create = async (req, res) => {
     }
 
     const doctor = await Doctor.create(data);
-    return res.status(200).json(doctor);
+    return res.status(201).json(doctor);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Something went wrong" });

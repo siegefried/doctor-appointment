@@ -25,7 +25,7 @@ const index = async (req, res) => {
   const { query } = req;
   try {
     const users = await User.find(query);
-    return res.status(200).json(users);
+    return res.status(201).json(users);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Something went wrong" });
